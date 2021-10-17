@@ -1,8 +1,36 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using RentOrExchange.WebApp.Areas.Identity.Data
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@inject UserManager<MyAppUser> UserManager
+
+<div>
+    <h1 class="display-4 text-center">Welcome!</h1>
+    <br />
+    @if (User.IsInRole("AppUser"))
+    {
+        <h4>Hello AppUser !!!</h4>
+
+        <button class="btn-primary" style="margin:100px; height:50px; width:40%"> Post your item</button>
+    }
+    else if (User.IsInRole("Developer"))
+    {
+        <h4>Hello Developer !!!</h4>
+    }
+    else if (User.IsInRole("Tester"))
+    {
+        <h4>Hello Tester !!!</h4>
+    }
+    
+    else if (User.IsInRole("Admin"))
+    {
+        <h4>Welcome back Nadia!</h4>
+    }
+    else
+    {
+        <h4>Login to your account.</h4>
+    }
+
 </div>

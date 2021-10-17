@@ -11,13 +11,6 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 
-
-
-
-
-
-
-
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -36,22 +29,19 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllWorkItems">All WorkItem</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllWorkItems">Approve Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllUsers">Users</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UserRole">Role</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllUsers">All Users</a>
                             </li>
                         }
-                        @if (User.IsInRole("Manager"))
+                        @if (User.IsInRole("AppUser"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="ManagerBoard" asp-route-id="0">Manager Board</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="ManagerBoard" asp-route-id="0">Rent</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TeamBoard">Team Board</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TeamBoard">Exchange</a>
                             </li>
                         }
                         @if (User.IsInRole("Developer"))
