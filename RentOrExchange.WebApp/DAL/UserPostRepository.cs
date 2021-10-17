@@ -18,7 +18,7 @@ namespace RentOrExchange.WebApp.DAL
 
         public UserPost GetUserPostById(int id)
         {
-            return _dbContext.UserPosts.Find(id);
+            return _dbContext.UserPost.Find(id);
         }
 
         //public IEnumerable<WorkItem> GetWorkItemsByState(WIStatus workItemStatus)
@@ -35,27 +35,27 @@ namespace RentOrExchange.WebApp.DAL
 
         public IEnumerable<UserPost> GetAllUserPosts(string userId)
         {
-            return _dbContext.UserPosts.Where(x => x.CreatedBy == userId).ToList();
+            return _dbContext.UserPost.Where(x => x.CreatedBy == userId).ToList();
         }
 
         public IEnumerable<UserPost> GetUserPostsByType(int postType)
         {
-            return _dbContext.UserPosts.Where(x => x.PostType == postType).ToList();
+            return _dbContext.UserPost.Where(x => x.PostType == postType).ToList();
         }
 
         public IEnumerable<UserPost> GetAllPosts()
         {
-            return _dbContext.UserPosts.ToList();
+            return _dbContext.UserPost.ToList();
         }
 
         public void CreateUserPost(UserPost userPost)
         {
-            _dbContext.UserPosts.Add(userPost);
+            _dbContext.UserPost.Add(userPost);
         }
 
         public void UpdateUserPost(UserPost userPost)
         {
-            _dbContext.UserPosts.Update(userPost);
+            _dbContext.UserPost.Update(userPost);
         }
 
         public void Save()

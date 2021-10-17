@@ -16,7 +16,7 @@ namespace RentOrExchange.WebApp.Data
         {
         }
 
-        public DbSet<UserPost> UserPosts { get; set; }
+        public DbSet<UserPost> UserPost { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

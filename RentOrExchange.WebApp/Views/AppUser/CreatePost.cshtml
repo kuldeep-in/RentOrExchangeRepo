@@ -1,0 +1,64 @@
+﻿@model RentOrExchange.WebApp.Areas.Identity.Data.UserPost
+
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<h1 class="text-center">Create Post</h1>
+
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="CreatePost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="card" style="margin-bottom:4px; background-color:lightgray">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <textarea asp-for="Description" rows="3" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Price"></label>
+                                <input asp-for="Price" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="PostType"></label>
+                            <select asp-for="PostType" class="form-control">
+                                <option>Please select one</option>
+                                <option value="1">Rent</option>
+                                <option value="2">Exchange</option>
+                            </select>
+                            <span asp-validation-for="PostType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode"></label>
+                        <input asp-for="PostalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index","Home", new {}, new { @class = "btn btn-secondary" })
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

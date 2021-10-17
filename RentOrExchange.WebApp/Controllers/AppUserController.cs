@@ -46,10 +46,14 @@ namespace RentOrExchange.WebApp.Controllers
                     {
                         Title = userPost.Title,
                         Description = userPost.Description,
+                        Price = userPost.Price,
+                        PostType = userPost.PostType,
                         IsActive =  false,
                         IsApproved = false,
                         CreatedBy = user.UserName,
-                        CreatedOn = DateTime.UtcNow
+                        CreatedOn = DateTime.UtcNow,
+                        Address = userPost.Address,
+                        PostalCode = userPost.PostalCode
 
                     });
                 

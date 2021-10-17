@@ -12,11 +12,12 @@ namespace RentOrExchange.WebApp.Areas.Identity.Data
         [DisplayName("Id")]
         public int UserPostId { get; set; }
 
+        [Required]
         [DisplayName("Title")]
         [Column(TypeName = "nvarchar(100)")]
         public string Title { get; set; }
 
-        [DisplayName("Requirement description")]
+        [DisplayName("Description")]
         public string Description { get; set; }
 
         [Column(TypeName = "bit")]
@@ -32,10 +33,17 @@ namespace RentOrExchange.WebApp.Areas.Identity.Data
 
         public int PostType { get; set; }
 
-#nullable enable
-        public string? ModifiedBy { get; set; }
+        [DisplayName("Postal Code")]
+        [Required]
+        public string PostalCode { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:dd-MMM hh:mm tt}")]
-        public DateTime? ModifiedOn { get; set; }
+        public double Price { get; set; }
+
+#nullable enable
+        public string? Address { get; set; }
+        //public string? ModifiedBy { get; set; }
+
+        ////[DisplayFormat(DataFormatString = "{0:dd-MMM hh:mm tt}")]
+        //public DateTime? ModifiedOn { get; set; }
     }
 }
