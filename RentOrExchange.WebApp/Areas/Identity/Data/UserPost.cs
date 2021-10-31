@@ -2,9 +2,11 @@
 namespace RentOrExchange.WebApp.Areas.Identity.Data
 {
     using System;
+    using System.Web;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Microsoft.AspNetCore.Http;
 
     public class UserPost
     {
@@ -45,5 +47,8 @@ namespace RentOrExchange.WebApp.Areas.Identity.Data
 
         ////[DisplayFormat(DataFormatString = "{0:dd-MMM hh:mm tt}")]
         //public DateTime? ModifiedOn { get; set; }
+
+        [NotMapped]
+        public IFormFile PostImages { get; set; }
     }
 }

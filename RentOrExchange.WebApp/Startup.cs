@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,8 @@ namespace RentOrExchange.WebApp
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddApplicationInsightsTelemetry();
+
+            services.AddSingleton<BlobServiceClient>(InitializeBlobClientInstanceAsync(Configuration.GetSection("AzureStorage")));
 
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContextConnection")));
             services.AddScoped<IUserPostRepository, UserPostRepository>();
@@ -63,6 +66,16 @@ namespace RentOrExchange.WebApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private static BlobServiceClient InitializeBlobClientInstanceAsync(IConfigurationSection configurationSection)
+        {
+            string connectionString = configurationSection.GetSection("ConnectionString").Value;
+            //string queueName = configurationSection.GetSection("QueueName").Value;
+
+            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+
+            return blobServiceClient;
         }
     }
 }
