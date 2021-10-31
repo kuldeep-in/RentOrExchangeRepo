@@ -12,7 +12,7 @@ namespace RentOrExchange.WebApp.DAL
         IEnumerable<UserPost> GetAllUserPosts(string userId);
         IEnumerable<UserPost> GetUserPostsByType(int postType);
         IEnumerable<UserPost> GetAllPosts();
-        void CreateUserPost(UserPost userPost);
+        void CreateUserPost(UserPostViewModel userPost);
         void UpdateUserPost(UserPost userPost);
         void Save();
     }

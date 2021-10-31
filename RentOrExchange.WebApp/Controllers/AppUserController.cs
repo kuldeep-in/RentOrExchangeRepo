@@ -45,14 +45,15 @@ namespace RentOrExchange.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
+                var postFile = string.Empty;
 
                 if (userPost.PostImages != null)
                 {
-                    await UploadFiles(user.Id, userPost.PostImages);
+                    postFile = await UploadFiles(user.Id, userPost.PostImages);
                 }
 
                 _userPostRepository.CreateUserPost(
-                    new UserPost
+                    new UserPostViewModel
                     {
                         Title = userPost.Title,
                         Description = userPost.Description,
@@ -63,7 +64,8 @@ namespace RentOrExchange.WebApp.Controllers
                         CreatedBy = user.UserName,
                         CreatedOn = DateTime.UtcNow,
                         Address = userPost.Address,
-                        PostalCode = userPost.PostalCode
+                        PostalCode = userPost.PostalCode,
+                        PostFile = postFile
 
                     });
 

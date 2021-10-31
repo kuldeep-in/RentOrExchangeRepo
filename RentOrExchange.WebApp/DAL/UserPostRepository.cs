@@ -1,7 +1,10 @@
-﻿using RentOrExchange.WebApp.Areas.Identity.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using RentOrExchange.WebApp.Areas.Identity.Data;
 using RentOrExchange.WebApp.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,9 +51,31 @@ namespace RentOrExchange.WebApp.DAL
             return _dbContext.UserPost.ToList();
         }
 
-        public void CreateUserPost(UserPost userPost)
+        public void CreateUserPost(UserPostViewModel userPost)
         {
-            _dbContext.UserPost.Add(userPost);
+            //_dbContext.UserPost.Add(userPost);
+
+            try
+            {
+                //object[] xparams = {
+                ////new SqlParameter("@ParameterWithNumvalue", DBNull.Value),
+                //new SqlParameter("@title", userPost.Title),
+                //new SqlParameter("@description", userPost.Description),
+                //new SqlParameter("@createdBy", userPost.CreatedBy),
+                //new SqlParameter("@postType", userPost.PostType),
+                //new SqlParameter("@price", userPost.Price),
+                //new SqlParameter("@address", userPost.Address),
+                //new SqlParameter("@postalCode", userPost.PostalCode),
+                //new SqlParameter("@fileName", userPost.PostFile),
+                ////new SqlParameter("@Out_Parameter", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                //};
+
+                var res = _dbContext.Database.ExecuteSqlRaw("CreateUserPost {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", userPost.Title, userPost.Description, userPost.CreatedBy, userPost.PostType, userPost.Price, userPost.Address, userPost.PostalCode, userPost.PostFile);
+
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         public void UpdateUserPost(UserPost userPost)

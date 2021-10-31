@@ -51,4 +51,10 @@ namespace RentOrExchange.WebApp.Areas.Identity.Data
         [NotMapped]
         public IFormFile PostImages { get; set; }
     }
+
+    public class UserPostViewModel : UserPost
+
+    {
+        public string PostFile { get; set; }
+    }
 }
