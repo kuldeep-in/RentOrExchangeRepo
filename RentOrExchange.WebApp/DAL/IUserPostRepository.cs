@@ -10,10 +10,12 @@ namespace RentOrExchange.WebApp.DAL
     {
         UserPost GetUserPostById(int id);
         IEnumerable<UserPost> GetAllUserPosts(string userId);
-        IEnumerable<UserPost> GetUserPostsByType(int postType);
+        IEnumerable<UserPostViewModel> GetPostsByType(int postType);
         IEnumerable<UserPost> GetAllPosts();
         void CreateUserPost(UserPostViewModel userPost);
+        IEnumerable<UserPostViewModel> GetPostToApprove();
         void UpdateUserPost(UserPost userPost);
+        void ApproveUserPost(int id, int btnAction);
         void Save();
     }
 }

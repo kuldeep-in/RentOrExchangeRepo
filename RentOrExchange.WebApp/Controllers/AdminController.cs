@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentOrExchange.WebApp.Areas.Identity.Data;
+using RentOrExchange.WebApp.DAL;
 using RentOrExchange.WebApp.Data;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,17 @@ namespace RentOrExchange.WebApp.Controllers
         private DBContext _dbContext;
         private UserManager<MyAppUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
+        private readonly IUserPostRepository _userPostRepository;
 
         public AdminController(DBContext dbContext,
                                 RoleManager<IdentityRole> roleManager,
-                                UserManager<MyAppUser> userManager)
+                                UserManager<MyAppUser> userManager,
+                                IUserPostRepository userPostRepository)
         {
             this._dbContext = dbContext;
             this._roleManager = roleManager;
             this._userManager = userManager;
+            this._userPostRepository = userPostRepository;
         }
 
         // GET: AdminController
@@ -31,54 +35,37 @@ namespace RentOrExchange.WebApp.Controllers
             return View();
         }
 
-        public IActionResult AllPostsToApprove()
+        public IActionResult AllUsers()
         {
-            var users = _userManager.Users.ToList();
-            return View(users);
+            List<MyAppUser> userlist = (from user in _dbContext.Users
+                                        join userRoles in _dbContext.UserRoles on user.Id equals userRoles.UserId
+                                        where userRoles.RoleId == "d154e673-0e10-4d3d-acf7-3aed33af2fca"
+                                        //join role in _dbContext.Roles on userRoles.RoleId equals role.Id
+                                        select new MyAppUser
+                                                {
+                                                    Id = user.Id,
+                                                    Email = user.Email,
+                                                    FirstName = user.FirstName,
+                                                    LastName = user.LastName,
+                                                    UserName = user.UserName
+                                                }).ToList();
+
+            return View(userlist.OrderBy(x => x.Email));
+
         }
 
-        public async Task<IActionResult> ApprovePost(string id, int btnAction)
+        public IActionResult AllPostsToApprove()
         {
-            if (btnAction == 0)
-            {
-                var user = await _userManager.FindByIdAsync(id);
-                var logins = await _userManager.GetLoginsAsync(user);
-                var rolesForUser = await _userManager.GetRolesAsync(user);
+            var result = _userPostRepository.GetPostToApprove();
+            return View(result);
+        }
 
-                using (var transaction = _dbContext.Database.BeginTransaction())
-                {
-                    IdentityResult result = IdentityResult.Success;
-                    foreach (var login in logins)
-                    {
-                        result = await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
-                        if (result != IdentityResult.Success)
-                            break;
-                    }
-                    if (result == IdentityResult.Success)
-                    {
-                        foreach (var item in rolesForUser)
-                        {
-                            result = await _userManager.RemoveFromRoleAsync(user, item);
-                            if (result != IdentityResult.Success)
-                                break;
-                        }
-                    }
-                    if (result == IdentityResult.Success)
-                    {
-                        result = await _userManager.DeleteAsync(user);
-                        if (result == IdentityResult.Success)
-                            transaction.Commit(); //only commit if user and all his logins/roles have been deleted  
-                    }
-                }
-            }
-            else
-            {
-                var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
-                user.LockoutEnd = null;
-                _dbContext.SaveChanges();
-            }
+        public IActionResult ApprovePost(int id, int btnAction)
+        {
+            _userPostRepository.ApproveUserPost(id, btnAction);
 
-            return RedirectToAction("AllUsers");
+            _dbContext.SaveChanges();
+            return RedirectToAction("AllPostsToApprove");
         }
 
 

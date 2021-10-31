@@ -1,0 +1,39 @@
+﻿@model IEnumerable<RentOrExchange.WebApp.Areas.Identity.Data.MyAppUser>
+@{
+    ViewData["Title"] = "AllUsers";
+}
+
+<h1>AllUsers</h1>
+
+<table class="table table-striped" style="padding-top:8px;">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

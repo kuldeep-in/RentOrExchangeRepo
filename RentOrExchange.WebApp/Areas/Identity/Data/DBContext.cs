@@ -18,6 +18,9 @@ namespace RentOrExchange.WebApp.Data
 
         public DbSet<UserPost> UserPost { get; set; }
 
+        // from stored procedures
+        public virtual DbSet<UserPostViewModel> GetPostToApprove { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserPost>().HasKey(a => a.UserPostId);

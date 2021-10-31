@@ -90,3 +90,56 @@ AS
 	END
 
 GO
+
+CREATE PROCEDURE GetPostToApprove
+AS
+BEGIN
+select 
+UserPost.UserPostId, UserPost.Title, UserPost.Description, UserPost.CreatedBy, UserPost.CreatedOn, UserPost.PostType, UserPost.Price, UserPost.Address, UserPost.PostalCode, UserPostImage.FileName AS [PostFile]
+from [dbo].[UserPost]
+INNER JOIN [dbo].[UserPostImage] ON [dbo].[UserPost].UserPostId = UserPostImage.UserPostId
+AND [dbo].[UserPost].IsApproved = 0
+
+END
+GO
+
+CREATE PROCEDURE USP_GetAllUserPosts
+(@PostTypeId INT)
+AS
+BEGIN
+select 
+UserPost.UserPostId, UserPost.Title, UserPost.Description, UserPost.CreatedBy, UserPost.CreatedOn, UserPost.PostType, UserPost.Price, UserPost.Address, UserPost.PostalCode, UserPostImage.FileName AS [PostFile]
+from [dbo].[UserPost]
+INNER JOIN [dbo].[UserPostImage] ON [dbo].[UserPost].UserPostId = UserPostImage.UserPostId
+AND [dbo].[UserPost].IsApproved = 1
+AND [dbo].[UserPost].IsActive = 1
+AND [dbo].[UserPost].PostType = @PostTypeId
+
+END
+GO
+
+CREATE PROCEDURE Usp_ApproveUserPost
+(
+@UserPostId INT,
+@ApproveAction INT
+)
+AS
+BEGIN
+
+IF (@ApproveAction = 1)
+BEGIN
+UPDATE [UserPost]
+SET IsApproved = 1, IsActive = 1
+WHERE UserPostId = @UserPostId
+END
+
+IF (@ApproveAction = 0)
+BEGIN
+UPDATE [UserPost]
+SET IsApproved = 0, IsActive = 0
+WHERE UserPostId = @UserPostId
+END
+
+
+END
+GO

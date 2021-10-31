@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RentOrExchange.WebApp.Areas.Identity.Data.UserPostViewModel>
+@{
+    ViewData["Title"] = "Rent";
+}
+
+<h1>Rent</h1>
+
+
+<div class="row">
+@foreach (var item in Model)
+{
+    <div class="md-4" style="padding:5px;margin:10px;">
+        <div class="h3">@(item.PostType == 1 ? "For Rent" : "For Sale")</div>
+        <div class="h3">@item.Title</div>
+        <div>@item.Description</div>
+        <img style="max-width:30vh;" src="@item.PostFile" />
+        <div>Price: @item.Price</div>
+        <div>Address: @item.Address</div>
+        <div>Zip: @item.PostalCode</div>
+        <div>Created By @item.CreatedBy</div>
+    </div>
+}
+</div>

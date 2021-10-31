@@ -29,7 +29,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllWorkItems">Approve Posts</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllPostsToApprove">Approve Posts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllUsers">All Users</a>
@@ -37,12 +37,12 @@
                         }
                         @if (User.IsInRole("AppUser"))
                         {
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="ManagerBoard" asp-route-id="0">Rent</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TeamBoard">Exchange</a>
-                            </li>
+                            </li>*@
                         }
                         @if (User.IsInRole("Developer"))
                         {
@@ -62,6 +62,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TeamBoard">Team Board</a>
                             </li>
                         }
+                        <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rent">Rent</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Exchange">Exchange</a>
+                            </li>
                     </ul>
                 </div>
             </div>
